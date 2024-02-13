@@ -31,6 +31,7 @@ export default function DemoPage({ params }: Props) {
     toast(msg.data);
   });
   const { presenceData, updateStatus } = usePresence(`room:${roomID}`, name);
+  console.log(presenceData);
   useEffect(() => {
     channel.history().then((page) => {
       console.log(page);
