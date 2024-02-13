@@ -16,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Theme>{children}</Theme>
-        <Toaster expand />
+        <Theme>
+          {children}
+          <Toaster expand />
+        </Theme>
       </body>
     </html>
   );
