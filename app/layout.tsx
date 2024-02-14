@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import { Theme } from "@radix-ui/themes";
 import { Toaster } from "sonner";
 import "@/styles/global.css";
+import { Web3Provider } from "@/context/web3";
+import { SITE_DESCRIPTION, SITE_NAME, WALLETCONNECT_CONFIG } from "@/lib/const";
+import { cookieToInitialState } from 'wagmi'
+import { headers } from "next/headers";
+import { Layout } from "@/components/layout";
 
 export const metadata: Metadata = {
-  title: "Plane Boomer",
-  description: "An interesting diApp game",
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
 };
 
 export default function RootLayout({
@@ -13,13 +18,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialState = cookieToInitialState(WALLETCONNECT_CONFIG, headers().get('cookie'))
+
   return (
     <html lang="en">
       <body>
-        <Theme>
-          {children}
-          <Toaster expand />
-        </Theme>
+        <Web3Provider initialState={initialState}>
+          <Theme>
+            <Layout>
+              {children}
+              <Toaster expand />
+            </Layout>
+          </Theme>
+        </Web3Provider>
       </body>
     </html>
   );
