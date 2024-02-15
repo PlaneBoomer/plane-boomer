@@ -1,35 +1,35 @@
 "use client";
-import { useAccount, useBalance, useEstimateGas, useReadContract, useSendTransaction, useWaitForTransactionReceipt } from 'wagmi'
-import { useState, useEffect } from 'react'
-import { parseEther, formatEther } from 'viem'
-import { toast, Toaster } from 'sonner'
-import * as Form from '@radix-ui/react-form';
-import { PLANE_BOOMER_BALST_SEPOLIA_ADDRESS } from '@/lib/const/contract';
-import type { Address } from '@/types/web3';
-import { Text } from '@radix-ui/themes';
-import abis from "@/abis/planeBoomer.json"
+import { useAccount, useBalance, useEstimateGas, useReadContract, useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
+import { useState, useEffect } from "react";
+import { parseEther, formatEther } from "viem";
+import { toast, Toaster } from "sonner";
+import * as Form from "@radix-ui/react-form";
+import { PLANE_BOOMER_BALST_SEPOLIA_ADDRESS } from "@/lib/const/contract";
+import type { Address } from "@/types/web3";
+import { Text } from "@radix-ui/themes";
+import abi from "@/abis/planeBoomer.json";
 
 const to: Address = PLANE_BOOMER_BALST_SEPOLIA_ADDRESS;
 
 export default function Deposit() {
-  const [amount, setAmount] = useState('0.01')
-  const { address } = useAccount()
+  const [amount, setAmount] = useState("0.01");
+  const { address } = useAccount();
   const balance = useBalance({
     address,
-  })
+  });
 
   const { data: estimateData, error: estimateError } = useEstimateGas({
     to,
     value: parseEther(amount),
-  })
+  });
 
-  const { data, sendTransaction } = useSendTransaction()
-  const { data: depositedBalance } = useReadContract({
+  const { data, sendTransaction } = useSendTransaction();
+  const depositedBalance = useReadContract({
     address: to,
-    abi: abis,
+    abi,
     functionName: "balanceOf",
     args: [address],
-  })
+  });
 
   const {
     isLoading,
@@ -37,34 +37,35 @@ export default function Deposit() {
     isSuccess: txSuccess,
   } = useWaitForTransactionReceipt({
     hash: data,
-  })
+  });
 
   const handleSendTransation = () => {
     if (estimateError) {
-      toast.error(`Transaction failed: ${estimateError.cause}`)
-      return
+      toast.error(`Transaction failed: ${estimateError.cause}`);
+      return;
     }
     sendTransaction({
       gas: estimateData,
       value: parseEther(amount),
       to
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     if (txSuccess) {
-      toast.success(`Transaction successful with hash: ${data}`)
-      balance.refetch()
+      toast.success(`Transaction successful with hash: ${data}`);
+      balance.refetch();
+      depositedBalance.refetch();
     } else if (txError) {
-      toast.error(`Transaction failed: ${txError.cause}`)
+      toast.error(`Transaction failed: ${txError.cause}`);
     }
-  }, [txSuccess, txError])
+  }, [txSuccess, txError]);
 
   const formatBalance = (balance: bigint) => {
-    return parseFloat(formatEther(balance, 'wei')).toFixed(4)
-  }
+    return parseFloat(formatEther(balance, "wei")).toFixed(4);
+  };
 
-  const isButtonDisabled = !address || Boolean(estimateError) || amount === '' || parseFloat(amount) < 0.01
+  const isButtonDisabled = !address || Boolean(estimateError) || amount === "" || parseFloat(amount) < 0.01 || isLoading;
 
   return (
     <Form.Root onSubmit={e => e.preventDefault()}>
@@ -88,20 +89,20 @@ export default function Deposit() {
         <Text>
           {balance.data ?
             `Your balance: ${formatBalance(balance.data!.value)}` :
-            'Please connect your wallet'
+            "Please connect your wallet"
           }
         </Text>
 
         <Text>
-          {depositedBalance && `Your Depositd balance: ${formatBalance(depositedBalance.toString())}`}
+          {!!depositedBalance.data  && `Your deposited balance: ${formatBalance(depositedBalance.data as bigint)}`}
         </Text>
       </div>
 
       <button disabled={isButtonDisabled} className='btn' onClick={handleSendTransation}>
-        {isLoading ? "Loading..." : 'Deposit'}
+        {isLoading ? "Loading..." : "Deposit"}
       </button>
       <Toaster />
     </Form.Root>
-  )
+  );
 
 }

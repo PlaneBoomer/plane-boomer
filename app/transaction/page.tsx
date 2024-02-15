@@ -1,7 +1,7 @@
-'use client'
-import { Tabs, Box } from '@radix-ui/themes'
-import Deposit from './deposit';
-import Withdraw from './withdraw';
+"use client";
+import { Tabs, Box } from "@radix-ui/themes";
+import Deposit from "./deposit";
+import Withdraw from "./withdraw";
 
 export default function Transaction() {
   return (
@@ -21,5 +21,5 @@ export default function Transaction() {
         </Tabs.Content>
       </Box>
     </Tabs.Root>
-  )
+  );
 }

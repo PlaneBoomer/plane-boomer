@@ -1,625 +1,839 @@
 [
     {
-        "type": "constructor",
         "inputs": [
             {
+                "internalType": "address",
                 "name": "blastAddress",
-                "type": "address",
-                "internalType": "address"
+                "type": "address"
             }
         ],
-        "stateMutability": "nonpayable"
+        "stateMutability": "nonpayable",
+        "type": "constructor"
     },
     {
-        "type": "receive",
-        "stateMutability": "payable"
-    },
-    {
-        "type": "function",
-        "name": "BLAST",
         "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "contract IBlast"
-            }
-        ],
-        "stateMutability": "view"
+        "name": "ECDSAInvalidSignature",
+        "type": "error"
     },
     {
-        "type": "function",
-        "name": "balanceOf",
         "inputs": [
             {
+                "internalType": "uint256",
+                "name": "length",
+                "type": "uint256"
+            }
+        ],
+        "name": "ECDSAInvalidSignatureLength",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bytes32",
+                "name": "s",
+                "type": "bytes32"
+            }
+        ],
+        "name": "ECDSAInvalidSignatureS",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "InvalidShortString",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnableInvalidOwner",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
                 "name": "account",
-                "type": "address",
-                "internalType": "address"
+                "type": "address"
             }
         ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
+        "name": "OwnableUnauthorizedAccount",
+        "type": "error"
     },
     {
-        "type": "function",
-        "name": "changeFeeRate",
         "inputs": [
             {
+                "internalType": "string",
+                "name": "str",
+                "type": "string"
+            }
+        ],
+        "name": "StringTooLong",
+        "type": "error"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
                 "name": "value",
-                "type": "uint256",
-                "internalType": "uint256"
+                "type": "uint256"
             }
         ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "changeMinBet",
-        "inputs": [
-            {
-                "name": "value",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "claimAllGas",
-        "inputs": [
-            {
-                "name": "contractAddress",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "recipientOfGas",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "claimAllYield",
-        "inputs": [
-            {
-                "name": "contractAddress",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "recipientOfYield",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "claimGas",
-        "inputs": [
-            {
-                "name": "contractAddress",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "recipientOfGas",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "gasToClaim",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "gasSecondsToConsume",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "claimGasAtMinClaimRate",
-        "inputs": [
-            {
-                "name": "contractAddress",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "recipientOfGas",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "minClaimRateBips",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "claimMaxGas",
-        "inputs": [
-            {
-                "name": "contractAddress",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "recipientOfGas",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "claimYield",
-        "inputs": [
-            {
-                "name": "contractAddress",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "recipientOfYield",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "amount",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "endPlay",
-        "inputs": [
-            {
-                "name": "_roomId",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "winner",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "feeRate",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "minBet",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "owner",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "players",
-        "inputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "balance",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "stakeBalance",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "roomId",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "readClaimableYield",
-        "inputs": [
-            {
-                "name": "contractAddress",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "readGasParams",
-        "inputs": [
-            {
-                "name": "contractAddress",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "etherSeconds",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "etherBalance",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "lastUpdated",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "",
-                "type": "uint8",
-                "internalType": "enum GasMode"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "readYieldConfiguration",
-        "inputs": [
-            {
-                "name": "contractAddress",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint8",
-                "internalType": "uint8"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "renounceOwnership",
-        "inputs": [],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "rooms",
-        "inputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "state",
-                "type": "uint8",
-                "internalType": "enum RoomState"
-            },
-            {
-                "name": "player1",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "player2",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "value",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
-                "name": "winner",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "startPlay",
-        "inputs": [
-            {
-                "name": "player1",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "player2",
-                "type": "address",
-                "internalType": "address"
-            },
-            {
-                "name": "value",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "totalFee",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "transferOwnership",
-        "inputs": [
-            {
-                "name": "newOwner",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "withdraw",
-        "inputs": [
-            {
-                "name": "value",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "withdrawAllFee",
-        "inputs": [],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "event",
         "name": "Deposit",
-        "inputs": [
-            {
-                "name": "from",
-                "type": "address",
-                "indexed": true,
-                "internalType": "address"
-            },
-            {
-                "name": "value",
-                "type": "uint256",
-                "indexed": false,
-                "internalType": "uint256"
-            }
-        ],
-        "anonymous": false
+        "type": "event"
     },
     {
-        "type": "event",
-        "name": "EndPlay",
+        "anonymous": false,
+        "inputs": [],
+        "name": "EIP712DomainChanged",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
         "inputs": [
             {
+                "indexed": true,
+                "internalType": "address",
                 "name": "winner",
-                "type": "address",
-                "indexed": true,
-                "internalType": "address"
+                "type": "address"
             },
             {
-                "name": "roomId",
-                "type": "uint256",
                 "indexed": false,
-                "internalType": "uint256"
+                "internalType": "uint256",
+                "name": "roomId",
+                "type": "uint256"
             }
         ],
-        "anonymous": false
+        "name": "EndGame",
+        "type": "event"
     },
     {
-        "type": "event",
-        "name": "OwnershipTransferred",
+        "anonymous": false,
         "inputs": [
             {
+                "indexed": true,
+                "internalType": "address",
                 "name": "previousOwner",
-                "type": "address",
-                "indexed": true,
-                "internalType": "address"
+                "type": "address"
             },
             {
+                "indexed": true,
+                "internalType": "address",
                 "name": "newOwner",
-                "type": "address",
-                "indexed": true,
-                "internalType": "address"
+                "type": "address"
             }
         ],
-        "anonymous": false
+        "name": "OwnershipTransferred",
+        "type": "event"
     },
     {
-        "type": "event",
-        "name": "StartPlay",
+        "anonymous": false,
         "inputs": [
             {
+                "indexed": true,
+                "internalType": "address",
                 "name": "player1",
-                "type": "address",
-                "indexed": true,
-                "internalType": "address"
+                "type": "address"
             },
             {
+                "indexed": true,
+                "internalType": "address",
                 "name": "player2",
-                "type": "address",
-                "indexed": true,
-                "internalType": "address"
+                "type": "address"
             },
             {
+                "indexed": false,
+                "internalType": "uint256",
                 "name": "value",
-                "type": "uint256",
-                "indexed": false,
-                "internalType": "uint256"
+                "type": "uint256"
             },
             {
-                "name": "roomId",
-                "type": "uint256",
                 "indexed": false,
-                "internalType": "uint256"
+                "internalType": "uint256",
+                "name": "roomId",
+                "type": "uint256"
             }
         ],
-        "anonymous": false
+        "name": "StartGame",
+        "type": "event"
     },
     {
-        "type": "event",
-        "name": "Withdrawal",
+        "anonymous": false,
         "inputs": [
             {
-                "name": "from",
-                "type": "address",
                 "indexed": true,
-                "internalType": "address"
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
             },
             {
-                "name": "value",
-                "type": "uint256",
                 "indexed": false,
-                "internalType": "uint256"
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
             }
         ],
-        "anonymous": false
+        "name": "Withdrawal",
+        "type": "event"
+    },
+    {
+        "inputs": [],
+        "name": "BLAST",
+        "outputs": [
+            {
+                "internalType": "contract IBlast",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "DOMAIN_SEPARATOR",
+        "outputs": [
+            {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "START_GAME_TYPEHASH",
+        "outputs": [
+            {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            }
+        ],
+        "name": "changeFeeRate",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            }
+        ],
+        "name": "changeMinBet",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "recipientOfGas",
+                "type": "address"
+            }
+        ],
+        "name": "claimAllGas",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "recipientOfYield",
+                "type": "address"
+            }
+        ],
+        "name": "claimAllYield",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "recipientOfGas",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "gasToClaim",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "gasSecondsToConsume",
+                "type": "uint256"
+            }
+        ],
+        "name": "claimGas",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "recipientOfGas",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "minClaimRateBips",
+                "type": "uint256"
+            }
+        ],
+        "name": "claimGasAtMinClaimRate",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "recipientOfGas",
+                "type": "address"
+            }
+        ],
+        "name": "claimMaxGas",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "recipientOfYield",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "claimYield",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "eip712Domain",
+        "outputs": [
+            {
+                "internalType": "bytes1",
+                "name": "fields",
+                "type": "bytes1"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "version",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "chainId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "verifyingContract",
+                "type": "address"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "salt",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "extensions",
+                "type": "uint256[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_roomId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "winner",
+                "type": "address"
+            }
+        ],
+        "name": "endGame",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "feeRate",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_roomId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getRoomPlayers",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "minBet",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "nonces",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "player1",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "player2",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint8",
+                "name": "v1",
+                "type": "uint8"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "r1",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "s1",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint8",
+                "name": "v2",
+                "type": "uint8"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "r2",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "s2",
+                "type": "bytes32"
+            }
+        ],
+        "name": "permitStartGame",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "players",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "balance",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "roomId",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            }
+        ],
+        "name": "readClaimableYield",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            }
+        ],
+        "name": "readGasParams",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "etherSeconds",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "etherBalance",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "lastUpdated",
+                "type": "uint256"
+            },
+            {
+                "internalType": "enum GasMode",
+                "name": "",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "contractAddress",
+                "type": "address"
+            }
+        ],
+        "name": "readYieldConfiguration",
+        "outputs": [
+            {
+                "internalType": "uint8",
+                "name": "",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_roomId",
+                "type": "uint256"
+            }
+        ],
+        "name": "revertGame",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "roomId",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "rooms",
+        "outputs": [
+            {
+                "internalType": "enum RoomState",
+                "name": "state",
+                "type": "uint8"
+            },
+            {
+                "internalType": "address",
+                "name": "player1",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "player2",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "winner",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            }
+        ],
+        "name": "withdraw",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "stateMutability": "payable",
+        "type": "receive"
     }
 ]

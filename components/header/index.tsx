@@ -1,8 +1,8 @@
-import React from 'react'
-import Link from 'next/link'
-import { Heading } from '@radix-ui/themes'
-import { SITE_NAME } from '@/lib/const'
-import { ConnectButton } from '../connect-button'
+import React from "react";
+import Link from "next/link";
+import { Heading } from "@radix-ui/themes";
+import { SITE_NAME } from "@/lib/const";
+import { ConnectButton } from "../connect-button";
 
 export function Header() {
   return (
@@ -12,5 +12,5 @@ export function Header() {
       </Link>
       <ConnectButton />
     </header>
-  )
+  );
 }

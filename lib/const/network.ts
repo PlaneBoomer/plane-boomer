@@ -1,3 +1,3 @@
-import { blastSepolia } from "viem/chains";
+import { Chain, blastSepolia } from "viem/chains";
 
-export const ETH_CHAINS = [blastSepolia];
+export const ETH_CHAINS: [Chain, ...Chain[]] = [blastSepolia];
