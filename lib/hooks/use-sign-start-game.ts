@@ -67,7 +67,7 @@ export function useSignStartGame() {
       slice(signature, 64, 65),
     ];
     return { signature, r, s, v };
-  }
+  };
 
   return { signStartGame };
 }

@@ -1,25 +1,28 @@
 "use client";
-import { Tabs, Box } from "@radix-ui/themes";
+import { Tabs, Box, Flex } from "@radix-ui/themes";
 import Deposit from "./deposit";
 import Withdraw from "./withdraw";
+import "./style.css";
 
 export default function Transaction() {
   return (
-    <Tabs.Root defaultValue="deposit">
-      <Tabs.List>
-        <Tabs.Trigger value="deposit">Deposit</Tabs.Trigger>
-        <Tabs.Trigger value="withdraw">Withdraw</Tabs.Trigger>
-      </Tabs.List>
+    <Flex justify="center" className="mt-12">
+      <Tabs.Root className="TabsRoot" defaultValue="deposit">
+        <Tabs.List className="TabsList">
+          <Tabs.Trigger className="TabsTrigger" value="deposit">Deposit</Tabs.Trigger>
+          <Tabs.Trigger className="TabsTrigger" value="withdraw">Withdraw</Tabs.Trigger>
+        </Tabs.List>
 
-      <Box px="4" pt="3" pb="2">
-        <Tabs.Content value="deposit">
-          <Deposit />
-        </Tabs.Content>
+        <Box px="4" pb="2">
+          <Tabs.Content className="TabsContent" value="deposit">
+            <Deposit />
+          </Tabs.Content>
 
-        <Tabs.Content value="withdraw">
-          <Withdraw />
-        </Tabs.Content>
-      </Box>
-    </Tabs.Root>
+          <Tabs.Content className="TabsContent" value="withdraw">
+            <Withdraw />
+          </Tabs.Content>
+        </Box>
+      </Tabs.Root>
+    </Flex>
   );
 }

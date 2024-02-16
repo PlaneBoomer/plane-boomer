@@ -28,7 +28,7 @@ export default function RootLayout({
             <Theme>
               <Layout>
                 {children}
-                <Toaster expand />
+                <Toaster expand richColors/>
               </Layout>
             </Theme>
           </AuthProvider>
