@@ -6,7 +6,6 @@
   display: flex;
   flex-direction: column;
   width: 480px;
-  height: 300px;
   background-color: var(--accent-3);
   border-radius: 1rem;
 }
@@ -14,8 +13,6 @@
 .TabsList {
   flex-shrink: 0;
   display: flex;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
   line-height: 3.5rem;
   height: 3.5rem;
 }
@@ -23,25 +20,21 @@
 .TabsTrigger {
   cursor: pointer;
   font-family: inherit;
-  background-color: white;
   padding: 0 20px;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
   color: rgb(16, 16, 16);
   user-select: none;
   background-color: var(--accent-2);
   font-size: 1.3rem;
 }
-
 .TabsTrigger:first-child {
-  border-top-left-radius: 6px;
+  border-top-left-radius: 1rem;
 }
-
 .TabsTrigger:last-child {
-  border-top-right-radius: 6px;
+  border-top-right-radius: 1rem;
 }
 
 .TabsTrigger[data-state='active'] {
@@ -63,15 +56,11 @@
 .TabsContent {
   flex-grow: 1;
   padding: 20px;
-  background-color: white;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
   outline: none;
   background-color: var(--accent-3);
 }
 
 .Input {
-  border-radius: 4px;
   width: 350px;
   padding: 0 10px;
   font-size: 15px;
