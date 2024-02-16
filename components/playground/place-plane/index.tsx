@@ -12,6 +12,7 @@ import { startTransition } from "react";
 interface PlacePlaneProps {
   className?: string;
   onPlacedPlanesChange?: (placedPlanes: PlaneCells[]) => void | Promise<void>;
+  disabled?: boolean;
 }
 
 const toolTip = (
@@ -26,6 +27,7 @@ const toolTip = (
 );
 
 export function PlacePlane(props: PlacePlaneProps) {
+  const { disabled } = props;
   const onPlacedPlanesChange = useStableFn(
     props.onPlacedPlanesChange || (() => void 0)
   );
@@ -61,17 +63,17 @@ export function PlacePlane(props: PlacePlaneProps) {
               "bg-slate-400": isPlacedPlaneCell,
               "bg-slate-300": isPreviewingPlaneCell,
               "hover:cursor-pointer":
-                isPreviewingPlaneCell || isPlacedPlaneCell,
+                !disabled && (isPreviewingPlaneCell || isPlacedPlaneCell),
             })}
             onMouseOver={() => {
               startTransition(() => {
-                if (!isPlacedPlaneCell) {
+                if (!disabled && !isPlacedPlaneCell) {
                   setPreviewingPlaneCenter(cellID);
                 }
               });
             }}
           >
-            {(isPlacedPlaneCell || isPreviewingPlaneCell) && (
+            {!disabled && (isPlacedPlaneCell || isPreviewingPlaneCell) && (
               <ContextMenu.Root>
                 <ContextMenu.Trigger>
                   <div

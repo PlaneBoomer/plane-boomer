@@ -1,3 +1,7 @@
+import { Playground } from "../playground";
+
+interface Props {}
+
 export function AttackEnemy() {
-  return <div>AttackEnemy</div>;
+  return <Playground>{(cellID) => null}</Playground>;
 }

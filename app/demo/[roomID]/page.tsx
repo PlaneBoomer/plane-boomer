@@ -31,12 +31,7 @@ export default function DemoPage({ params }: Props) {
     toast(msg.data);
   });
   const { presenceData, updateStatus } = usePresence(`room:${roomID}`, name);
-  console.log(presenceData);
-  useEffect(() => {
-    channel.history().then((page) => {
-      console.log(page);
-    });
-  }, [channel]);
+  console.log(channel.state);
   return (
     <Container p="9">
       <Flex gap="2" align="start" justify="center" direction="column">

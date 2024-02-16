@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { PlaneUtil, getCellPosition } from "./utils";
+import { PlaneUtil, getCellPosition } from "../utils";
 import type { PlaneCells } from "../type";
 import { useStableFn } from "@/lib/hooks/use-stable-fn";
 import { DEFAULT_PLANE_NUM } from "../constants";

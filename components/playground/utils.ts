@@ -1,5 +1,5 @@
-import { PLANE_BODY, PLAYGROUND } from "../constants";
-import type { PlaneCells } from "../type";
+import { PLANE_BODY, PLAYGROUND } from "./constants";
+import type { PlaneCells } from "./type";
 
 function sinTheta(rotatedTimes: number) {
   const rotatedTimesToSinThetaMap: Record<string, number> = {

@@ -1,5 +1,5 @@
 "use client";
-import { AblyClientProvider } from "@/components/ably-client-provider";
+import { AblyClientProvider } from "@/context/ably-client-provider";
 
 export default function DemoLayout({
   children,

@@ -11,3 +11,9 @@ if (!process.env.ABLY_API_KEY) {
 }
 
 export const ablyRestClient = new Ably.Rest(process.env.ABLY_API_KEY);
+
+export const notifyRoomDetailUpdate = async (roomID: string, data: any) => {
+  await ablyRestClient.channels
+    .get(`planeBoomer:room:${roomID}`)
+    .publish("updateRoomInfo", data);
+};

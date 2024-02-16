@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useStableFn } from "./use-stable-fn";
 
 interface Lifecycle<T> {
