@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import { parseEther, formatEther } from "viem";
 import { toast, Toaster } from "sonner";
 import * as Form from "@radix-ui/react-form";
-import { PLANE_BOOMER_BALST_SEPOLIA_ADDRESS } from "@/lib/const/contract";
+import { PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS } from "@/lib/const/contract";
 import type { Address } from "@/types/web3";
 import { Text } from "@radix-ui/themes";
 import abi from "@/abis/planeBoomer.json";
 
-const to: Address = PLANE_BOOMER_BALST_SEPOLIA_ADDRESS;
+const to: Address = PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS;
 
 export default function Deposit() {
   const [amount, setAmount] = useState("0.01");

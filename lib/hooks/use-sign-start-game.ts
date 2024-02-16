@@ -1,4 +1,4 @@
-import { PLANE_BOOMER_BALST_SEPOLIA_ADDRESS } from "../const/contract";
+import { PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS } from "../const/contract";
 import { useChainId, useClient, useAccount, useSignTypedData } from "wagmi";
 import { readContract } from "viem/actions";
 import { slice } from "viem";
@@ -24,7 +24,7 @@ export function useSignStartGame() {
   }: StartGameSignData
   ) => {
     const nonce = await readContract(client!, {
-      address: PLANE_BOOMER_BALST_SEPOLIA_ADDRESS,
+      address: PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS,
       functionName: "nonces",
       abi: abi,
       args: [account.address]
@@ -50,7 +50,7 @@ export function useSignStartGame() {
         name: "PlaneBoomer",
         version: "1",
         chainId: id,
-        verifyingContract: PLANE_BOOMER_BALST_SEPOLIA_ADDRESS
+        verifyingContract: PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS
       },
       message: {
         player1,
