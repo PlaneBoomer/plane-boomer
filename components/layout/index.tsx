@@ -10,7 +10,8 @@ export function Layout(props: PropsWithChildren) {
   useAccountEffect(
     {
       onConnect: () => {
-        login();
+        // 临时解决方案，等待账户加载完成后再登录
+        setTimeout(() => { login(); }, 1000);
       }
     }
   );
