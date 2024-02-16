@@ -6,9 +6,9 @@ import { ConnectButton } from "../connect-button";
 
 export function Header() {
   return (
-    <header className='navbar flex justify-between p-4 pt-2'>
+    <header className='flex justify-between p-4 container'>
       <Link href='/'>
-        <Heading>{SITE_NAME}</Heading>
+        <Heading size="7">{SITE_NAME} 💥</Heading>
       </Link>
       <ConnectButton />
     </header>

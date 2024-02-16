@@ -3,7 +3,7 @@ import React from "react";
 export function ConnectButton() {
   return (
     <div>
-      <w3m-button label='Connect' />
+      <w3m-button label='Connect Wallet' />
     </div>
   );
 }
