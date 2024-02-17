@@ -11,6 +11,7 @@ interface Props {
 
 export default function RoomLayout({ params: { roomID }, children }: Props) {
   const account = useAccountInfo();
+
   return (
     <AblyClientProvider clientID={account.address}>
       {children}

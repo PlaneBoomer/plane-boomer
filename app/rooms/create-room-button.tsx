@@ -26,6 +26,7 @@ export const CreateRoomButton = () => {
     playgroundSize: z.number().array(),
     planesNum: z.number(),
   });
+  const [open, setOpen] = useState(false);
   const createRoomMutation = useMutation({
     mutationFn: async (roomInfo: z.infer<typeof formSchema>) => {
       const res = await fetch(`/api/rooms`, {
@@ -49,7 +50,7 @@ export const CreateRoomButton = () => {
   });
   if (account.isConnected) {
     return (
-      <AlertDialog.Root>
+      <AlertDialog.Root open={open} onOpenChange={setOpen}>
         <AlertDialog.Trigger>
           <Button
             className="w-44"

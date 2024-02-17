@@ -25,7 +25,7 @@ export function WithstandAttack(props: Props) {
             justify="center"
             align="center"
           >
-            {destroyedCellsStr && <Cross1Icon />}
+            {destroyedCellsStr.includes(`[${cellID}]`) && <Cross1Icon />}
           </Flex>
         );
       }}

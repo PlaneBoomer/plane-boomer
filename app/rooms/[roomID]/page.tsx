@@ -4,7 +4,7 @@ import { useRoom } from "./use-room";
 import { InfoPanel } from "./info-panel";
 import { ROOM_STATUS, RoomDetail } from "../types";
 import { Flex } from "@radix-ui/themes";
-import { useState } from "react";
+import { useState, useMemo, use } from "react";
 import { PlaneCells } from "@/components/playground/type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAccountInfo } from "@/lib/hooks/use-account-info";
@@ -55,15 +55,28 @@ export default function RoomDetailPage(props: Props) {
   const isAttaching = isLoading || channel.state !== "attached";
   const prepared = myPlanes.query.data.length > 0;
   const account = useAccountInfo();
-  if (isAttaching) {
-    return <div>Attaching...</div>;
-  }
   const destroyedCells =
     roomData?.rounds
       .filter((item) => {
-        item.attacker !== account.address;
+        return item.attacker !== account.address;
       })
       .map((item) => item.position) || [];
+  const attackResults =
+    roomData?.rounds.filter((item) => {
+      return item.attacker === account.address;
+    }) || [];
+  const disableAttack = useMemo(() => {
+    const { rounds = [], players } = roomData || {};
+    if (rounds.length === 0) {
+      return players?.first !== account.address;
+    } else {
+      const lastRound = rounds[rounds.length - 1];
+      return lastRound.attacker === account.address;
+    }
+  }, [roomData, account.address]);
+  if (isAttaching) {
+    return <div>Attaching...</div>;
+  }
   return (
     <Flex justify="between" gap="4">
       <InfoPanel
@@ -92,13 +105,25 @@ export default function RoomDetailPage(props: Props) {
           <Playground>{() => null}</Playground>
         </>
       )}
-      {roomData?.status === ROOM_STATUS.STARTED && (
+      {[ROOM_STATUS.STARTED, ROOM_STATUS.END, ROOM_STATUS.ARCHIVED].includes(
+        roomData?.status as ROOM_STATUS
+      ) && (
         <>
           <Playground.WithstandAttack
             myPlanes={myPlanes.query.data}
             destroyedCells={destroyedCells}
           />
-          <Playground.AttackEnemy />
+          <Playground.AttackEnemy
+            attackResults={attackResults}
+            isUpdating={isUpdating}
+            onAttack={mutations.attack}
+            disableAttack={
+              disableAttack &&
+              [ROOM_STATUS.END, ROOM_STATUS.ARCHIVED].includes(
+                roomData?.status as ROOM_STATUS
+              )
+            }
+          />
         </>
       )}
     </Flex>
