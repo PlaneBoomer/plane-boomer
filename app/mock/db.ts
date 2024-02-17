@@ -1,19 +1,17 @@
 import { PlaneCells } from "@/components/playground/type";
 import { RoomDetail } from "../rooms/types";
-import fse from "fs-extra";
+import { kv } from "@vercel/kv";
 
 type RoomDbDetail = Omit<RoomDetail, "planes"> & {
   allPlacedPlanes: Record<string, PlaneCells[]>;
 };
 
 export const readDB = async () => {
-  if (!fse.existsSync("db.json")) {
-    await fse.outputJSON("db.json", []);
-  }
-  const content = await fse.readJSON("db.json");
-  return content as RoomDbDetail[];
+  const data = (await kv.get("rooms")) ?? [];
+  return data as RoomDbDetail[];
+
 };
 
 export const writeDB = async (data: RoomDbDetail[]) => {
-  await fse.outputJSON("db.json", data);
+  await kv.set("rooms", data);
 };
