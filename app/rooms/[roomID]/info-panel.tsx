@@ -107,6 +107,10 @@ export const InfoPanel = ({
         <Text>{bet}</Text>
       </Flex>
       <Flex gap="2">
+        <Strong>Status:</Strong>
+        {!isUpdating ? ROOM_STATUS[status] : "Updating"}
+      </Flex>
+      <Flex gap="2">
         <Strong>Owner:</Strong>
         <Player address={players.owner} />
       </Flex>
@@ -114,6 +118,12 @@ export const InfoPanel = ({
         <Flex gap="2">
           <Strong>Guest:</Strong>
           <Player address={players.guest} />
+        </Flex>
+      )}
+      {players.winner && (
+        <Flex gap="2">
+          <Strong>Winner:</Strong>
+          <Player address={players.winner} />
         </Flex>
       )}
       {status === ROOM_STATUS.CREATED && (

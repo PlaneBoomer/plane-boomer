@@ -1,21 +1,18 @@
 "use client";
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useEffect } from "react";
 import { Header } from "../header";
-import { useAccountEffect } from "wagmi";
+import { useAccount } from "wagmi";
 import { useAuth } from "@/context/auth";
 
 export function Layout(props: PropsWithChildren) {
   const { login } = useAuth();
 
-  useAccountEffect(
-    {
-      onConnect: () => {
-        // 临时解决方案，等待账户加载完成后再登录
-        setTimeout(() => { login(); }, 1000);
-      }
+  const { isConnected } = useAccount();
+  useEffect(() => {
+    if (isConnected) {
+      login();
     }
-  );
-
+  }, [isConnected])
   return (
     <div className="flex flex-col min-h-screen">
       <Header />

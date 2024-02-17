@@ -14,6 +14,7 @@ import "@/styles/global.css";
 export const metadata: Metadata = {
   title: SITE_NAME,
   description: SITE_DESCRIPTION,
+  icons: "/favicon.ico",
 };
 
 export default function RootLayout({
@@ -31,7 +32,7 @@ export default function RootLayout({
             <Theme>
               <Layout>
                 {children}
-                <Toaster expand richColors/>
+                <Toaster expand richColors />
               </Layout>
             </Theme>
           </AuthProvider>

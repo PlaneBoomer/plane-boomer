@@ -1,4 +1,5 @@
 import type { Address } from "@/types/web3";
+import type { AttackResult } from "@/components/playground/type";
 
 export enum ROOM_STATUS {
   CREATED = 1,
@@ -7,12 +8,6 @@ export enum ROOM_STATUS {
   LOCKED = 4,
   END = 5,
   ARCHIVED = 6,
-}
-
-export enum AttackResult {
-  NONE = 1,
-  BODY = 2,
-  HEAD = 3,
 }
 
 export interface RoomDetail {

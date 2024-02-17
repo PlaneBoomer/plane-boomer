@@ -20,6 +20,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false });
   }
   // @TODO: Set a cookie or something to indicate that the user is logged in
-  cookies().set("token", "token");
+  cookies().set("addr", rest.address);
   return NextResponse.json({ success: true });
 }

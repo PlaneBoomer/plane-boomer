@@ -5,21 +5,26 @@ import { useStableFn } from "@/lib/hooks/use-stable-fn";
 import { getChannelName } from "./utils";
 import { useAccountInfo } from "@/lib/hooks/use-account-info";
 import { PlaneCells } from "@/components/playground/type";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const useInitializeRoom = (roomID: string) => {
   const [roomData, setRoomData] = useState<RoomDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     setIsLoading(true);
     // 获取房间信息
     fetch(`/api/rooms/${roomID}`)
-      .then((res) => res.json())
+      .then((res) => {
+        return res.json();
+      })
       .then((data) => {
         setRoomData(data);
         setIsLoading(false);
       });
-  }, [roomID]);
+  }, [roomID, router]);
   const update = useStableFn((updateFn: () => Promise<void>) => {
     setIsUpdating(true);
     Promise.resolve(updateFn());
@@ -30,6 +35,18 @@ const useInitializeRoom = (roomID: string) => {
     (msg) => {
       if (msg.name === "updateRoomInfo") {
         setRoomData(msg.data);
+        const roomData = msg.data as RoomDetail;
+        if (roomData.status === ROOM_STATUS.STARTED) {
+          if (
+            (roomData.rounds.length === 0 &&
+              roomData.players.first === account.address) ||
+            (roomData.rounds.length > 0 &&
+              roomData.rounds[roomData.rounds.length - 1].attacker !==
+                account.address)
+          ) {
+            toast("Your turn to attack");
+          }
+        }
         setIsUpdating(false);
       }
     }
@@ -79,7 +96,7 @@ const useMutateRoom = (
       });
     });
   });
-  const attack = useStableFn((position: [number, number]) => {
+  const attack = useStableFn((position: number[]) => {
     update(async () => {
       await fetch(`/api/rooms/${roomID}/attack`, {
         method: "POST",

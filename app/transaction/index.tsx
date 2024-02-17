@@ -6,7 +6,7 @@ import "./style.css";
 
 export default function Transaction() {
   return (
-    <Flex justify="center" className="mt-12">
+    <Flex justify="center">
       <Tabs.Root className="TabsRoot" defaultValue="deposit">
         <Tabs.List className="TabsList">
           <Tabs.Trigger className="TabsTrigger" value="deposit">Deposit</Tabs.Trigger>
