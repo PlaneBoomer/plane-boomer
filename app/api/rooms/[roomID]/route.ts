@@ -8,6 +8,7 @@ export async function GET(
 ) {
   const { roomID } = options.params;
   const rooms = await readDB();
+  console.log(rooms);
   const room = rooms.find((item) => item.id === roomID);
   if (!room) {
     return NextResponse.json(

@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
     rounds: [],
   });
   await writeDB(rooms);
+  console.log(await readDB());
   return NextResponse.json({
     roomID,
   });

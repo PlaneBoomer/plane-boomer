@@ -22,7 +22,7 @@ export const useAccountInfo = () => {
       isConnected,
       isAuthenticated,
       login,
-      chipsAmount: (chipsAmount as number) || 100,
+      chipsAmount: (chipsAmount as number) || 0,
     }),
     [address, isConnected, chipsAmount, isAuthenticated, login]
   );
