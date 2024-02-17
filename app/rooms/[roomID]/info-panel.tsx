@@ -8,7 +8,8 @@ import { useRoom } from "./use-room";
 import { Address } from "@/types/web3";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { PlaneCells } from "@/components/playground/type";
-
+import { useSignStartGame } from "@/lib/hooks/use-sign-start-game";
+import { parseEther } from "viem";
 interface MemberListProps {
   channel: ReturnType<typeof useRoom>["channel"];
   owner: Address;
@@ -99,6 +100,7 @@ export const InfoPanel = ({
   placedPlanes = [],
   prepared,
 }: InfoPanelProps) => {
+  const { signStartGame } = useSignStartGame();
   const { bet, players, status } = roomData;
   return (
     <Flex direction="column" gap="3">
@@ -138,8 +140,13 @@ export const InfoPanel = ({
         (!prepared ? (
           <Button
             disabled={placedPlanes.length < roomData.planesNum || isUpdating}
-            onClick={() => {
-              mutations.placePlanes(placedPlanes);
+            onClick={async () => {
+              const { r, s, v } = await signStartGame({
+                player1: players.owner,
+                player2: players.guest!,
+                value: parseEther(roomData.bet.toString()).toString(),
+              });
+              mutations.placePlanes({planes: placedPlanes, r, s, v });
             }}
           >
             Prepared

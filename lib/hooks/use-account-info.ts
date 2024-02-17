@@ -4,6 +4,7 @@ import { PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS } from "@/lib/const/contract";
 import abis from "@/abis/planeBoomer.json";
 import { useMemo } from "react";
 import { useAuth } from "@/context/auth";
+import { formatEther } from "viem";
 
 const to: Address = PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS;
 
@@ -22,7 +23,7 @@ export const useAccountInfo = () => {
       isConnected,
       isAuthenticated,
       login,
-      chipsAmount: (chipsAmount as number) || 0,
+      chipsAmount: chipsAmount ? Number(parseFloat(formatEther(chipsAmount as bigint, "wei")).toFixed(6)) : 0,
     }),
     [address, isConnected, chipsAmount, isAuthenticated, login]
   );

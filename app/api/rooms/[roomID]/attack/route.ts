@@ -5,6 +5,28 @@ import { Address } from "@/types/web3";
 import { AttackResult } from "@/components/playground/type";
 import { notifyRoomDetailUpdate } from "@/lib/server/ably-rest-client";
 import { ROOM_STATUS } from "@/app/rooms/types";
+import { readContract, writeContract, waitForTransactionReceipt } from "viem/actions";
+import { client } from "@/app/api/utils/web3";
+import { PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS } from "@/lib/const/contract";
+import abi from "@/abis/planeBoomer.json";
+
+const writeContractEndGame = async (winner: Address) => {
+  const [, roomId] = (await readContract(client, {
+    address: PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS,
+    abi,
+    functionName: "players",
+    args: [winner],
+  })) as [bigint, bigint]; 
+
+  const hash = await writeContract(client, {
+    address: PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS,
+    abi,
+    functionName: "endGame",
+    args: [roomId, winner],
+  });
+
+  return waitForTransactionReceipt(client, { hash });
+};
 
 // 发起攻击
 export async function POST(
@@ -65,6 +87,12 @@ export async function POST(
     }
     await writeDB(rooms);
     notifyRoomDetailUpdate(roomID, room);
+    if (room.status === ROOM_STATUS.END) {
+      await writeContractEndGame(room.players.winner as Address);
+      room.status = ROOM_STATUS.ARCHIVED;
+      notifyRoomDetailUpdate(roomID, room);
+      writeDB(rooms);
+    }
     return NextResponse.json({
       success: true,
     });

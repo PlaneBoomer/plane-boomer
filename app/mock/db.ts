@@ -5,6 +5,7 @@ import { unstable_noStore as noStore } from "next/cache";
 
 type RoomDbDetail = Omit<RoomDetail, "planes"> & {
   allPlacedPlanes: Record<string, PlaneCells[]>;
+  rsv: Record<string, any>;
 };
 
 export const readDB = async () => {

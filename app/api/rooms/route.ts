@@ -8,7 +8,7 @@ import { Address } from "@/types/web3";
 export async function GET(req: NextRequest) {
   return NextResponse.json({
     rooms: (await readDB()).map((room) => {
-      const { allPlacedPlanes, ...returnedRoom } = room;
+      const { allPlacedPlanes, rsv, ...returnedRoom } = room;
       return returnedRoom;
     }),
   });
@@ -31,9 +31,9 @@ export async function POST(req: NextRequest) {
     },
     allPlacedPlanes: {},
     rounds: [],
+    rsv: {},
   });
   await writeDB(rooms);
-  console.log(await readDB());
   return NextResponse.json({
     roomID,
   });

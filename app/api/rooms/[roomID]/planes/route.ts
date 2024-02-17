@@ -3,6 +3,11 @@ import { NextResponse, type NextRequest } from "next/server";
 import { readDB, writeDB } from "@/app/mock/db";
 import { ROOM_STATUS } from "@/app/rooms/types";
 import { notifyRoomDetailUpdate } from "@/lib/server/ably-rest-client";
+import { writeContract, waitForTransactionReceipt } from "viem/actions";
+import { client } from "@/app/api/utils/web3";
+import { PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS } from "@/lib/const/contract";
+import abi from "@/abis/planeBoomer.json";
+import { parseEther } from "viem";
 
 // 摆放飞机
 export async function POST(
@@ -15,8 +20,33 @@ export async function POST(
   const rooms = await readDB();
   const room = rooms.find((item) => item.id === roomID);
   if (room) {
-    room.allPlacedPlanes[operator] = payload.planes;
+    const { planes, r, s, v } = payload;
+    room.allPlacedPlanes[operator] = planes;
+    room.rsv = room.rsv || {};
+    room.rsv[operator] = { r, s, v };
     if (Object.values(room.allPlacedPlanes).length === 2) {
+      const owner = room.players.owner;
+      const guest = room.players.guest!;
+      const hashData = await writeContract(
+        client,
+        {
+          address: PLANE_BOOMER_BLAST_SEPOLIA_ADDRESS,
+          abi,
+          functionName: "permitStartGame",
+          args: [
+            room.players.owner,
+            room.players.guest,
+            parseEther(room.bet.toString()).toString(),
+            room.rsv[owner].v,
+            room.rsv[owner].r,
+            room.rsv[owner].s,
+            room.rsv[guest].v,
+            room.rsv[guest].r,
+            room.rsv[guest].s
+          ],
+        }
+      );
+      waitForTransactionReceipt(client, { hash: hashData });
       room.status = ROOM_STATUS.STARTED;
       room.players.first = room.players.owner;
     }

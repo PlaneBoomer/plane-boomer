@@ -29,7 +29,7 @@ export const CreateRoomButton = () => {
   const [open, setOpen] = useState(false);
   const createRoomMutation = useMutation({
     mutationFn: async (roomInfo: z.infer<typeof formSchema>) => {
-      const res = await fetch(`/api/rooms`, {
+      const res = await fetch("/api/rooms", {
         method: "POST",
         body: JSON.stringify(roomInfo),
       });
@@ -78,9 +78,7 @@ export const CreateRoomButton = () => {
                           min={0}
                           max={account.chipsAmount}
                           {...field}
-                          value={parseInt(field.value.toString())
-                            .toFixed(0)
-                            .toString()}
+                          value={field.value.toString()}
                           onChange={(e) => {
                             field.onChange({
                               target: {

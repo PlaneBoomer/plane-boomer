@@ -42,7 +42,7 @@ const useInitializeRoom = (roomID: string) => {
               roomData.players.first === account.address) ||
             (roomData.rounds.length > 0 &&
               roomData.rounds[roomData.rounds.length - 1].attacker !==
-                account.address)
+              account.address)
           ) {
             toast("Your turn to attack");
           }
@@ -78,11 +78,11 @@ const useMutateRoom = (
   roomID: string,
   update: ReturnType<typeof useInitializeRoom>["update"]
 ) => {
-  const placePlanes = useStableFn((planes: PlaneCells[]) => {
+  const placePlanes = useStableFn((data: { planes: PlaneCells[], r: string, s: string, v: string }) => {
     update(async () => {
       await fetch(`/api/rooms/${roomID}/planes`, {
         method: "POST",
-        body: JSON.stringify({ planes }),
+        body: JSON.stringify(data),
       });
     });
   });

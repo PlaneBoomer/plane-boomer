@@ -26,10 +26,10 @@ const useMyPlanes = (roomID: string) => {
     },
   });
   const mutation = useMutation({
-    mutationFn: async (planes: PlaneCells[]) => {
+    mutationFn: async (data: { planes: PlaneCells[], r: string, s: string, v: string }) => {
       await fetch(`/api/rooms/${roomID}/planes`, {
         method: "POST",
-        body: JSON.stringify({ planes }),
+        body: JSON.stringify(data),
       });
     },
     onSuccess() {
@@ -56,13 +56,12 @@ export default function RoomDetailPage(props: Props) {
   const prepared = myPlanes.query.data.length > 0;
   const account = useAccountInfo();
   const destroyedCells =
-    roomData?.rounds
-      .filter((item) => {
-        return item.attacker !== account.address;
-      })
+    roomData?.rounds?.filter((item) => {
+      return item.attacker !== account.address;
+    })
       .map((item) => item.position) || [];
   const attackResults =
-    roomData?.rounds.filter((item) => {
+    roomData?.rounds?.filter((item) => {
       return item.attacker === account.address;
     }) || [];
   const disableAttack = useMemo(() => {
@@ -108,24 +107,24 @@ export default function RoomDetailPage(props: Props) {
       {[ROOM_STATUS.STARTED, ROOM_STATUS.END, ROOM_STATUS.ARCHIVED].includes(
         roomData?.status as ROOM_STATUS
       ) && (
-        <>
-          <Playground.WithstandAttack
-            myPlanes={myPlanes.query.data}
-            destroyedCells={destroyedCells}
-          />
-          <Playground.AttackEnemy
-            attackResults={attackResults}
-            isUpdating={isUpdating}
-            onAttack={mutations.attack}
-            disableAttack={
-              disableAttack &&
-              [ROOM_STATUS.END, ROOM_STATUS.ARCHIVED].includes(
-                roomData?.status as ROOM_STATUS
-              )
-            }
-          />
-        </>
-      )}
+          <>
+            <Playground.WithstandAttack
+              myPlanes={myPlanes.query.data}
+              destroyedCells={destroyedCells}
+            />
+            <Playground.AttackEnemy
+              attackResults={attackResults}
+              isUpdating={isUpdating}
+              onAttack={mutations.attack}
+              disableAttack={
+                disableAttack &&
+                [ROOM_STATUS.END, ROOM_STATUS.ARCHIVED].includes(
+                  roomData?.status as ROOM_STATUS
+                )
+              }
+            />
+          </>
+        )}
     </Flex>
   );
 }
