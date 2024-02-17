@@ -46,7 +46,9 @@ export async function POST(
           ],
         }
       );
-      waitForTransactionReceipt(client, { hash: hashData });
+
+      await waitForTransactionReceipt(client, { hash: hashData });
+
       room.status = ROOM_STATUS.STARTED;
       room.players.first = room.players.owner;
     }
